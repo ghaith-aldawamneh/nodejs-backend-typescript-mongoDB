@@ -15,6 +15,12 @@ const router = express.Router();
 router.use(authentication);
 /*-------------------------------------------------------------------------*/
 
+
+//ApiKey:{_id,key,version,permissions,comments,status?,createdAt,updatedAt}
+//RoleRequest:{currentRoleCodes,ApiKey}
+//ProtectedRequest: {user,accessToken,keystore,RoleRequest}
+
+
 router.get(
   '/my',
   asyncHandler(async (req: ProtectedRequest, res) => {

@@ -46,7 +46,7 @@ async function create(
     secondaryKey: secondaryKey,
     createdAt: now,
     updatedAt: now,
-  });
+  })
   return keystore.toObject();
 }
 

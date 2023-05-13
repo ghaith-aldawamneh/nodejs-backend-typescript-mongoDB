@@ -14,17 +14,28 @@ import validator, { ValidationSource } from '../helpers/validator';
 import schema from './schema';
 import asyncHandler from '../helpers/asyncHandler';
 
+
 const router = express.Router();
+
+
+//ApiKey:{_id,key,version,permissions,comments,status?,createdAt,updatedAt}
+//currentRoleCodes:{currentRoleCodes,ApiKey}
+//PublicRequest extends Request{apiKey}
+//RoleRequest extends PublicRequest{currentRoleCodes}
+//ProtectedRequest extend RoleRequest: {user,accessToken,keystore,RoleRequest}
+
 
 export default router.use(
   validator(schema.auth, ValidationSource.HEADER),
   asyncHandler(async (req: ProtectedRequest, res, next) => {
     req.accessToken = getAccessToken(req.headers.authorization); // Express headers are auto converted to lowercase
 
+
     try {
       const payload = await JWT.validate(req.accessToken);
       validateTokenData(payload);
 
+      
       const user = await UserRepo.findById(new Types.ObjectId(payload.sub));
       if (!user) throw new AuthFailureError('User not registered');
       req.user = user;
@@ -40,3 +51,4 @@ export default router.use(
     }
   }),
 );
+

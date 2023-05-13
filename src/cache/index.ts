@@ -1,9 +1,9 @@
-import { redis } from '../config';
+import { redis } from '../config1';
 import { createClient } from 'redis';
 import Logger from '../core/Logger';
 
 const redisURL = `redis://:${redis.password}@${redis.host}:${redis.port}`;
-
+//`redis://:password@host:port`
 const client = createClient({ url: redisURL });
 
 client.on('connect', () => Logger.info('Cache is connecting'));
@@ -13,6 +13,9 @@ client.on('reconnecting', () => Logger.info('Cache is reconnecting'));
 client.on('error', (e) => Logger.error(e));
 
 (async () => {
+  client.on("error", (error) => {console.error(`Ups : ${error}`)
+  Logger.error(`error from redis :${error}`);
+});
   await client.connect();
 })();
 

@@ -1,3 +1,11 @@
+
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/ghaith-aldawamneh/nodejs-backend-architecture-typescript-master.git
+git push -u origin main
+
 # Node.js Backend Architecture Typescript Project
 ### A complete project to build a blogging platform like Medium, and FreeCodeCamp
 

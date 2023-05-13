@@ -3,7 +3,7 @@ import { AuthFailureError, InternalError } from '../core/ApiError';
 import JWT, { JwtPayload } from '../core/JWT';
 import { Types } from 'mongoose';
 import User from '../database/model/User';
-import { tokenInfo } from '../config';
+import { tokenInfo } from '../config1';
 
 export const getAccessToken = (authorization?: string) => {
   if (!authorization) throw new AuthFailureError('Invalid Authorization');
@@ -14,24 +14,26 @@ export const getAccessToken = (authorization?: string) => {
 
 export const validateTokenData = (payload: JwtPayload): boolean => {
   if (
-    !payload ||
-    !payload.iss ||
-    !payload.sub ||
-    !payload.aud ||
-    !payload.prm ||
-    payload.iss !== tokenInfo.issuer ||
-    payload.aud !== tokenInfo.audience ||
-    !Types.ObjectId.isValid(payload.sub)
+
+    !payload ||!payload.iss ||!payload.sub ||
+    !payload.aud ||!payload.prm ||payload.iss !== tokenInfo.issuer ||
+    payload.aud !== tokenInfo.audience ||!Types.ObjectId.isValid(payload.sub)
+
   )
     throw new AuthFailureError('Invalid Access Token');
   return true;
 };
 
+
+
+//Tokens{accessToken:string;refreshToken:string;}
 export const createTokens = async (
   user: User,
   accessTokenKey: string,
   refreshTokenKey: string,
 ): Promise<Tokens> => {
+
+
   const accessToken = await JWT.encode(
     new JwtPayload(
       tokenInfo.issuer,
@@ -42,7 +44,12 @@ export const createTokens = async (
     ),
   );
 
+
+
+
   if (!accessToken) throw new InternalError();
+
+
 
   const refreshToken = await JWT.encode(
     new JwtPayload(
@@ -54,10 +61,16 @@ export const createTokens = async (
     ),
   );
 
+
+
+
   if (!refreshToken) throw new InternalError();
 
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
   } as Tokens;
+
+
+
 };

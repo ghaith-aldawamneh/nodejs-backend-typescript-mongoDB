@@ -15,11 +15,13 @@ import role from '../../helpers/role';
 const router = express.Router();
 
 /*-------------------------------------------------------------------------*/
+//in this stage a new record will be added
 router.use(
   authentication,
   role(RoleCode.ADMIN, RoleCode.EDITOR),
   authorization,
 );
+
 /*-------------------------------------------------------------------------*/
 
 router.put(

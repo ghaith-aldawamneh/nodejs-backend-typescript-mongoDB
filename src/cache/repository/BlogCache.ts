@@ -2,7 +2,7 @@ import { getJson, setJson } from '../query';
 import { Types } from 'mongoose';
 import Blog from '../../database/model/Blog';
 import { DynamicKey, getDynamicKey } from '../keys';
-import { caching } from '../../config';
+import { caching } from '../../config1';
 import { addMillisToCurrentDate } from '../../helpers/utils';
 
 function getKeyForId(blogId: Types.ObjectId) {

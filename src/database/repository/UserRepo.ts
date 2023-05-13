@@ -10,6 +10,7 @@ async function exists(id: Types.ObjectId): Promise<boolean> {
   return user !== null && user !== undefined;
 }
 
+
 async function findPrivateProfileById(
   id: Types.ObjectId,
 ): Promise<User | null> {
@@ -23,6 +24,12 @@ async function findPrivateProfileById(
     .lean<User>()
     .exec();
 }
+
+
+async function findPublicProfileById(id: Types.ObjectId): Promise<User | null> {
+  return UserModel.findOne({ _id: id, status: true }).lean().exec();
+}
+
 
 // contains critical information of the user
 async function findById(id: Types.ObjectId): Promise<User | null> {
@@ -59,9 +66,7 @@ async function findFieldsById(
     .exec();
 }
 
-async function findPublicProfileById(id: Types.ObjectId): Promise<User | null> {
-  return UserModel.findOne({ _id: id, status: true }).lean().exec();
-}
+
 
 async function create(
   user: User,
@@ -70,7 +75,7 @@ async function create(
   roleCode: string,
 ): Promise<{ user: User; keystore: Keystore }> {
   const now = new Date();
-
+//RoleModel(code:s-enum,status,createdAt,updatedAt)
   const role = await RoleModel.findOne({ code: roleCode })
     .select('+code')
     .lean()
@@ -90,6 +95,12 @@ async function create(
     keystore: keystore,
   };
 }
+////////////////////////////////////
+
+
+
+
+
 
 async function update(
   user: User,

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Logger from '../core/Logger';
-import { db } from '../config';
+import { db } from '../config1';
 
 // Build the connection string
 const dbURI = `mongodb://${db.user}:${encodeURIComponent(db.password)}@${
@@ -33,22 +33,22 @@ mongoose
   })
   .connect(dbURI, options)
   .then(() => {
-    Logger.info('Mongoose connection done');
+    Logger.info('Mongoose connection done(info)');
   })
   .catch((e) => {
-    Logger.info('Mongoose connection error');
-    Logger.error(e);
+    Logger.info('Mongoose connection error(info)');
+    Logger.error(e,'Logger.error');
   });
 
 // CONNECTION EVENTS
 // When successfully connected
 mongoose.connection.on('connected', () => {
-  Logger.debug('Mongoose default connection open to ' + dbURI);
+  Logger.debug('(Logger.debug)Mongoose default connection open to ' + dbURI);
 });
 
 // If the connection throws an error
 mongoose.connection.on('error', (err) => {
-  Logger.error('Mongoose default connection error: ' + err);
+  Logger.error('(Logger.error)Mongoose default connection error: ' + err);
 });
 
 // When the connection is disconnected
@@ -60,7 +60,7 @@ mongoose.connection.on('disconnected', () => {
 process.on('SIGINT', () => {
   mongoose.connection.close(() => {
     Logger.info(
-      'Mongoose default connection disconnected through app termination',
+      '(info)Mongoose default connection disconnected through app termination',
     );
     process.exit(0);
   });

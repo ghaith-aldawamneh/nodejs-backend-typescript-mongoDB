@@ -1,6 +1,6 @@
 // Mapper for environment variables
 export const environment = process.env.NODE_ENV;
-export const port = process.env.PORT;
+export const port1 = process.env.PORT;
 export const timezone = process.env.TZ;
 
 export const db = {
@@ -21,7 +21,7 @@ export const tokenInfo = {
   issuer: process.env.TOKEN_ISSUER || '',
   audience: process.env.TOKEN_AUDIENCE || '',
 };
-
+//
 export const logDirectory = process.env.LOG_DIR;
 
 export const redis = {

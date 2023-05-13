@@ -21,21 +21,29 @@ export class JwtPayload {
   exp: number;
   prm: string;
 
-  constructor(
+
+    constructor(
     issuer: string,
     audience: string,
     subject: string,
     param: string,
     validity: number,
   ) {
+
     this.iss = issuer;
     this.aud = audience;
     this.sub = subject;
     this.iat = Math.floor(Date.now() / 1000);
     this.exp = this.iat + validity;
     this.prm = param;
+
   }
 }
+
+
+
+
+
 
 async function readPublicKey(): Promise<string> {
   return promisify(readFile)(
@@ -44,12 +52,14 @@ async function readPublicKey(): Promise<string> {
   );
 }
 
+
 async function readPrivateKey(): Promise<string> {
   return promisify(readFile)(
     path.join(__dirname, '../../keys/private.pem'),
     'utf8',
   );
 }
+
 
 async function encode(payload: JwtPayload): Promise<string> {
   const cert = await readPrivateKey();

@@ -2,7 +2,7 @@ import { getListRange, setList } from '../query';
 import Blog from '../../database/model/Blog';
 import { DynamicKey, getDynamicKey } from '../keys';
 import { addMillisToCurrentDate } from '../../helpers/utils';
-import { caching } from '../../config';
+import { caching } from '../../config1';
 import { Types } from 'mongoose';
 
 function getKeyForSimilar(blogId: Types.ObjectId) {

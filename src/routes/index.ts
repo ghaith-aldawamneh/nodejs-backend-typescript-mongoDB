@@ -12,12 +12,13 @@ import blogs from './blogs';
 import profile from './profile';
 
 const router = express.Router();
-
+//express.Router().use(
 /*---------------------------------------------------------*/
+//validator(schema.apiKey,'GENERAL'),
 router.use(apikey);
 /*---------------------------------------------------------*/
-/*---------------------------------------------------------*/
 router.use(permission(Permission.GENERAL));
+//('GENERAL')=>req:public,res,next=>
 /*---------------------------------------------------------*/
 router.use('/signup', signup);
 router.use('/login', login);

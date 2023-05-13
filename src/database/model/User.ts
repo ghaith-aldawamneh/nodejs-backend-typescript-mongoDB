@@ -16,7 +16,8 @@ export default interface User {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
+//Role(_id,code,status,createdAt,updatedAt)
+//User(id,name,propicurl,pass,verified,roles,status,createddate,updatedate)
 const schema = new Schema<User>(
   {
     name: {
@@ -38,6 +39,7 @@ const schema = new Schema<User>(
     password: {
       type: Schema.Types.String,
       select: false,
+      
     },
     roles: {
       type: [

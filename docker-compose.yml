@@ -1,20 +1,32 @@
-version: '3.9'
+#docker-compose -f docker-compose.yml up -d --build
 
+
+version: '3.9'
+# docker-compose -f docker-compose.yml d --build
 services:
   app:
     # This defines the configuration options, including the context and dockerfile,
     # that will be applied when Compose builds the application image.
     build:
-      # This defines the build context for the image build — in this case, the current project directory.
-      context: .
+      # This defines the build context for the 
+      # image build — in this case, the current project directory.
+      context: . # LOCation of the docker file
       # This specifies the Dockerfile in your current project directory as the file
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile # Name of the docker file
+      args: 
+        NODE_ENV: development
     image: app
     container_name: app
     # This defines the restart policy. The default is no,
     # but we have set the container to restart unless it is stopped.
     restart: unless-stopped
     env_file: .env
+    ## environment NODE_ENV= "DEV"
+    ## commad: npm run dev / node index.js
+    ## volume: 
+       ##.:
+       ## ./node_modules
+    ## 
     ports:
       # This maps port from .env on the host to same port number on the container.
       - '$PORT:$PORT'
@@ -24,7 +36,6 @@ services:
     depends_on:
       - mongo
       - redis
-
   mongo:
     # To create this service, Compose will pull the mongo
     image: mongo:6.0.3

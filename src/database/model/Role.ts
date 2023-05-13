@@ -17,7 +17,8 @@ export default interface Role {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
+     
+//Role(_id,code,status,createdAt,updatedAt)
 const schema = new Schema<Role>(
   {
     code: {

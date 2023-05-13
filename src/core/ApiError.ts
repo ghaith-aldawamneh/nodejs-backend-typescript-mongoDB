@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { environment } from '../config';
+import { environment } from '../config1';
 import {
   AuthFailureResponse,
   AccessTokenErrorResponse,
@@ -22,17 +22,34 @@ export enum ErrorType {
   FORBIDDEN = 'ForbiddenError',
 }
 
+//interface Error:name,message,stack?
+
+/*
+abstract class ApiError extends Error{
+constructor all public(type,mes){super(type)}}
+public static handle(err:ApiError,res:Response):Response{
+  switch (err.type) {
+    return new AuthFailureResponse(err.message).send(res)
+    AuthFailureResponse{constructor(mes){super(protect code,status,mes)}}
+    prepare<this>(res,this,header)
+    const( statuscode, status mes)
+}
+
+
+*/
 export abstract class ApiError extends Error {
+
   constructor(public type: ErrorType, public message: string = 'error') {
-    super(type);
-  }
+    super(type);}
+  
 
   public static handle(err: ApiError, res: Response): Response {
     switch (err.type) {
       case ErrorType.BAD_TOKEN:
       case ErrorType.TOKEN_EXPIRED:
       case ErrorType.UNAUTHORIZED:
-        return new AuthFailureResponse(err.message).send(res);
+        return new AuthFailureResponse(err?.message).send(res);
+        // class extend ApiResponse that returns //constructor+super
       case ErrorType.ACCESS_TOKEN:
         return new AccessTokenErrorResponse(err.message).send(res);
       case ErrorType.INTERNAL:
@@ -54,6 +71,9 @@ export abstract class ApiError extends Error {
     }
   }
 }
+
+//this part must be organized as 
+//this part will play so important role.
 
 export class AuthFailureError extends ApiError {
   constructor(message = 'Invalid Credentials') {

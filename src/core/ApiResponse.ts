@@ -14,24 +14,29 @@ enum ResponseStatus {
   UNAUTHORIZED = 401,
   FORBIDDEN = 403,
   NOT_FOUND = 404,
-  INTERNAL_ERROR = 500,
+  INTERNAL_ERROR = 500
 }
-
+//statusCode,status,message
 abstract class ApiResponse {
+  //for the  Object.assign(clone, response); we put protectors for the members
   constructor(
-    protected statusCode: StatusCode,
-    protected status: ResponseStatus,
+    protected statusCode: StatusCode,//{"10000","10001","10002","10003"}
+    protected status: ResponseStatus,//{200,400,401,403,404,500}
     protected message: string,
   ) {}
+
 
   protected prepare<T extends ApiResponse>(
     res: Response,
     response: T,
     headers: { [key: string]: string },
   ): Response {
-    for (const [key, value] of Object.entries(headers)) res.append(key, value);
+    for (const [key, value] of Object.entries(headers)) {res.append(key, value);
+    console.log(key, value);}
     return res.status(this.status).json(ApiResponse.sanitize(response));
   }
+
+
 
   public send(
     res: Response,
@@ -39,17 +44,20 @@ abstract class ApiResponse {
   ): Response {
     return this.prepare<ApiResponse>(res, this, headers);
   }
+//
 
   private static sanitize<T extends ApiResponse>(response: T): T {
     const clone: T = {} as T;
     Object.assign(clone, response);
     // @ts-ignore
     delete clone.status;
-    for (const i in clone) if (typeof clone[i] === 'undefined') delete clone[i];
+    for (const i in clone) if (typeof clone[i] === 'undefined' ) delete clone[i];
     return clone;
   }
 }
 
+//----------end of the ApiResponse------------------
+//.send
 export class AuthFailureResponse extends ApiResponse {
   constructor(message = 'Authentication Failure') {
     super(StatusCode.FAILURE, ResponseStatus.UNAUTHORIZED, message);
@@ -95,7 +103,7 @@ export class FailureMsgResponse extends ApiResponse {
     super(StatusCode.FAILURE, ResponseStatus.SUCCESS, message);
   }
 }
-
+//statusCode,status,message
 export class SuccessResponse<T> extends ApiResponse {
   constructor(message: string, private data: T) {
     super(StatusCode.SUCCESS, ResponseStatus.SUCCESS, message);
@@ -125,14 +133,69 @@ export class AccessTokenErrorResponse extends ApiResponse {
 
 export class TokenRefreshResponse extends ApiResponse {
   constructor(
-    message: string,
+    message:string="Token issued",
     private accessToken: string,
     private refreshToken: string,
   ) {
     super(StatusCode.SUCCESS, ResponseStatus.SUCCESS, message);
-  }
+  }//
 
   send(res: Response, headers: { [key: string]: string } = {}): Response {
+    
+    
     return super.prepare<TokenRefreshResponse>(res, this, headers);
+  //here we used the this in order to take the class members
   }
 }
+/**
+ * 
+ * we have the class.public send that will take a message from the usage area, and success codes from enum,
+constructor(mes,private ATok,private RTok)super(statuscode,ResStatus,mes)
+inside redefining public send protected prepare<this>(res,this)
+inside the protected prepare<ex this>(res,response,headers)
+return res.status(this.status).json(private static ApiResponse.sanitize(response))
+inside the private static sanitize<ext this>(response){
+const clone:T ={} as T;
+for(const i in clone) if (typeof clone[i]==='undefined') delete clone[i];
+}
+
+ * constructor(message,private accessTok,private refrTok){
+ * super(statuscode, response.SUCCESS, message)}
+ * 
+ * res.status(this.status).json()
+ * 
+ * 
+public send(
+  res: Response,
+  headers: { [key: string]: string } = {},): Response {
+  return this.prepare<ApiResponse>(res, this, headers);
+}
+ */
+/**
+protected prepare<T extends ApiResponse>(
+  res: Response,
+  response: T,
+  headers: { [key: string]: string },
+): Response {
+  for (const [key, value] of Object.entries(headers)) {res.append(key, value);
+  console.log(key, value);}
+  return res.status(this.status).json(ApiResponse.sanitize(response));
+
+}
+*/
+
+//////////////////////////////////////////-------------------
+
+/***send(res,headers):Response
+ {return this.prepare(res, this/ApiResponse/, headers)}
+
+ prepare<T,ApiResponse>(3args):Response{for,headers=>res.append(key, value)}
+ return res.status(this.status.json(ApiResponse.sanitize(response)))
+
+ static sanitize<T/ApiResponse>(response:T):T
+ {clone: T = {} as T;Object.assign(clone, response);
+ delete clone.status;
+ for (const i in clone)clone[i] === 'undefined'=>delete
+ return clone;
+}
+*/
