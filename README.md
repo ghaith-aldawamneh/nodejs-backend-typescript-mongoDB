@@ -650,7 +650,7 @@ app# createfile (touch testfile)
 10. JWT 
 
 # About The Project
-This project is designed for a production ready environment. It can handle the scale and complexity of a very demanding application. This project is being used by companies like MindOrks, AfterAcademy, and CuriousJr. Apps/Websites having 10+ million usebase.
+This project is designed for a production ready environment. It can handle the scale and complexity of a very demanding application. This project is can be used by big companies .
 
 It is suitable for Web Apps, Mobile Apps, and other API services.
 
