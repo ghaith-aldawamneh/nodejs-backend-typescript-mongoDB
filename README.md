@@ -1,6 +1,14 @@
 # Node.js Backend Architecture Typescript Project
 
+
+### Some Brief schemas:
+![SCHEMA_1](/SCHEMA_1.png)
+![SCHEMA_2](/SCHEMA_2.png)
+
 ### A complete project to build a blogging platform like Medium, and FreeCodeCamp
+
+
+
 
 errors that i faced:
   - must use TLS 1.2 or higher. You are currently using plaintext http to connect. Please visit the GitHub blog for more information: https://github.blog/2021-08-23-npm-registry-deprecating-tls-1-0-tls-1-1/{i fixed it be:
