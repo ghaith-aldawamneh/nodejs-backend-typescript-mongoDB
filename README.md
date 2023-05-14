@@ -2,8 +2,8 @@
 
 
 ### Some Brief schemas:
-![SCHEMA_1](/SCHEMA_1.png)
-![SCHEMA_2](/SCHEMA_2.png)
+![SCHEMA_1](/SCHEMA_1.jpeg)
+![SCHEMA_2](/SCHEMA_2.jpeg)
 
 ### A complete project to build a blogging platform like Medium, and FreeCodeCamp
 
