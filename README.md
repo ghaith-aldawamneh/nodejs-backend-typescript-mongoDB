@@ -1,4 +1,4 @@
-# Node.js Backend Architecture Typescript Project
+# Node.js Backend Typescript Project
 
 
 
